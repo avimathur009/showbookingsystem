@@ -1,4 +1,13 @@
 package com.avimathur.showbookingsystem.model;
 
-public class SingingShow {
+import com.avimathur.showbookingsystem.constant.ShowType;
+import com.avimathur.showbookingsystem.pojo.LiveShow;
+
+public class SingingShow extends LiveShow {
+
+    public SingingShow(){
+        super();
+        type = ShowType.Singing;
+    }
+
 }

@@ -1,20 +1,24 @@
-package com.avimathur.showbookingsystem.model;
+package com.avimathur.showbookingsystem.pojo;
 
 public class User {
 
     String name;
     Integer age;
 
+    public User(String name){
+        this.name=name;
+    }
+
     public User(String name, Integer age){
         this.name=name;
         this.age=age;
     }
 
-    String getUserName(){
+    public String getUserName(){
         return name;
     }
 
-    Integer getUserAge(){
+    public Integer getUserAge(){
         return age;
     }
 

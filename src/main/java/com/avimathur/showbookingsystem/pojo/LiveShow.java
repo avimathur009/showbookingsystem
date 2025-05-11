@@ -1,9 +1,7 @@
-package com.avimathur.showbookingsystem.model;
+package com.avimathur.showbookingsystem.pojo;
 
 import com.avimathur.showbookingsystem.constant.ShowType;
 import com.avimathur.showbookingsystem.constant.Slot;
-
-import java.util.PriorityQueue;
 
 public abstract class LiveShow {
 
@@ -12,22 +10,25 @@ public abstract class LiveShow {
         String name;
         String uniqueShowId;
         Integer price;
-        Integer capacity;
+        Integer maxCapacity;
+        Integer currCapacity;
         Slot slot;
 
     public LiveShow(){
         this.name="";
         this.price=0;
-        this.capacity=0;
+        this.maxCapacity=0;
+        this.currCapacity=0;
         this.slot=Slot.Slot0;
+        this.uniqueShowId = java.util.UUID.randomUUID().toString();
     }
 
-    public void setShowDetails(String name, Integer price, Integer capacity, String slot){
+    public void setShowDetails(String name, Integer price, Integer capacity, Slot slot){
         this.name=name;
         this.price=price;
-        this.capacity=capacity;
-        this.slot=Slot.valueOf(slot);
-        this.uniqueShowId = 
+        this.maxCapacity=capacity;
+        this.currCapacity=capacity;
+        this.slot=slot;
     }
 
     public ShowType getShowType(){
@@ -42,15 +43,23 @@ public abstract class LiveShow {
         return price;
     }
 
-    public Integer getCapacity(){
-        return capacity;
+    public Integer getMaxCapacity(){
+        return maxCapacity;
+    }
+
+    public Integer getCurrCapacity(){
+        return currCapacity;
     }
 
     public Slot getShowSlot(){
         return slot;
     }
 
-    public void updateCapacity(Integer bookedUsers){
-        capacity=capacity-bookedUsers;
+    public void increaseCurrCapacity(Integer cancelledUsers){
+        currCapacity+=cancelledUsers;
+    }
+
+    public void decreaseCurrCapacity(Integer bookedUsers){
+        currCapacity-=bookedUsers;
     }
 }

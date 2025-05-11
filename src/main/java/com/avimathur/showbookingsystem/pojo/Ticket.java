@@ -1,6 +1,6 @@
-package com.avimathur.showbookingsystem;
+package com.avimathur.showbookingsystem.pojo;
 
-public abstract class Ticket {
+public class Ticket {
 
     public Ticket(String ticketType){
 

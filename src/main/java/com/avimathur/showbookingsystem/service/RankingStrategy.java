@@ -1,9 +1,20 @@
 package com.avimathur.showbookingsystem.service;
 
-import com.avimathur.showbookingsystem.repository.ShowsRepo;
+import com.avimathur.showbookingsystem.constant.ShowType;
+import com.avimathur.showbookingsystem.pojo.LiveShow;
+import org.springframework.stereotype.Component;
 
-public abstract class SavingShowToRepoStrategy {
+import java.util.ArrayList;
+import java.util.Map;
 
-    ShowsRepo showsRepo;
+@Component
+public abstract class RankingStrategy {
+
+    protected
+    Map<String, ArrayList<LiveShow>> listOfShows;
+
+    public abstract void displayAllShows(Map<String, ArrayList<LiveShow>> listOfShows);
+    public abstract void displayAllShowsByShowType(ShowType showType, Map<String, ArrayList<LiveShow>> listOfShows);
+    public abstract void displayAvailableShowsByShowType(ShowType showType, Map<String, ArrayList<LiveShow>> listOfShows);
 
 }

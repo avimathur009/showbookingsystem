@@ -1,6 +1,6 @@
 package com.avimathur.showbookingsystem.constant;
 
-public enum Slots {
+public enum Slot {
 
     Slot0  ("0000-0100"),
     Slot1  ("0100-0200"),
@@ -29,7 +29,29 @@ public enum Slots {
 
     final String slotDetail;
 
-    Slots(String slotDetail){
+    Slot(String slotDetail){
         this.slotDetail = slotDetail;
+    }
+
+    public static Slot fromSlotDetails(String input){
+        for(Slot slot : Slot.values()){
+            if(slot.getSlotDetail().equals(input)){
+                return slot;
+            }
+        }
+        return Slot0;
+    }
+
+    public static Boolean checkSlotString(String input) {
+        for(Slot slot : Slot.values()){
+            if(slot.getSlotDetail().equals(input)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String getSlotDetail(){
+        return slotDetail;
     }
 }

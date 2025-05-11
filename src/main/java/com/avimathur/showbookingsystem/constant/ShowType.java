@@ -1,4 +1,4 @@
-package com.avimathur.showbookingsystem;
+package com.avimathur.showbookingsystem.constant;
 
 public enum ShowType {
     Comedy,
