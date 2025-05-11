@@ -92,7 +92,7 @@ public class ShowsRepo {
     public LiveShow getShowBySlotAndName(Slot slot, String showName){
         if(listOfShows.containsKey(showName)){
             for(LiveShow show : listOfShows.get(showName)){
-                if(show.getShowName().equals(showName)){
+                if(show.getShowSlot() == slot){
                     return show;
                 }
             }
