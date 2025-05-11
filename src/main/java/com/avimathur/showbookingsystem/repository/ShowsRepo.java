@@ -115,10 +115,6 @@ public class ShowsRepo {
         listOfShows.get(showName).add(updatedShow);
     }
 
-    public void printAllShows(){
-        rankingStrategy.displayAllShows(listOfShows);
-    }
-
     public void printAllShowsByShowType(ShowType requestedShowType){
         rankingStrategy.displayAllShowsByShowType(requestedShowType,listOfShows);
     }

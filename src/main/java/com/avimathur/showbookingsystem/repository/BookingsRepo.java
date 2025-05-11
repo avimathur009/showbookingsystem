@@ -1,12 +1,6 @@
 package com.avimathur.showbookingsystem.repository;
-
-import com.avimathur.showbookingsystem.constant.Slot;
 import com.avimathur.showbookingsystem.pojo.Booking;
-import com.avimathur.showbookingsystem.pojo.LiveShow;
 import com.avimathur.showbookingsystem.pojo.User;
-import com.avimathur.showbookingsystem.service.BookingsManager;
-
-import java.awt.print.Book;
 import java.util.*;
 
 public class BookingsRepo {
@@ -49,20 +43,4 @@ public class BookingsRepo {
         return listOfUnconfirmedBookings;
     }
 
-    public Booking removeBookingFromListOfConfirmedBookings(User user, String bookingId){
-        ArrayList<Booking> listOfUsersBooking = listOfConfirmedBookings.get(user);
-        for(Booking booking : listOfUsersBooking){
-            if(booking.getBookingId().equals(bookingId)){
-                listOfUsersBooking.remove(booking);
-                listOfConfirmedBookings.put(user,listOfUsersBooking);
-                return booking;
-            }
-        }
-        System.out.println("No booking found to be removed!!");
-        return null;
-    }
-
-    public void updateListOfUnconfirmedBookings(Deque<Booking> listOfUnconfirmedBookings){
-        this.listOfUnconfirmedBookings=listOfUnconfirmedBookings;
-    }
 }

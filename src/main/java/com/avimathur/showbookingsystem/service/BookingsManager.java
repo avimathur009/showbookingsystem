@@ -54,11 +54,6 @@ public class BookingsManager {
         }
     }
 
-    public void showAllShowsByType(String type){
-        ShowType showType = ShowType.valueOf(type);
-        showsRepo.printAllShowsByShowType(showType);
-    }
-
     public void showAllAvailableShowsByType(String type){
         ShowType showType = ShowType.valueOf(type);
         showsRepo.printAllAvailableShowsByShowType(showType);
@@ -153,7 +148,6 @@ public class BookingsManager {
     }
 
     public Boolean isSlotAvailable(Slot slot, String showName) {
-        boolean slotFree = showsRepo.isSlotFreeForShowName(slot,showName);
-        return slotFree;
+        return showsRepo.isSlotFreeForShowName(slot,showName);
     }
 }

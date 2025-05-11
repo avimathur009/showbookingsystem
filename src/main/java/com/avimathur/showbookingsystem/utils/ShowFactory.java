@@ -26,10 +26,4 @@ public class ShowFactory {
         return show;
     }
 
-    //Comedy,
-    //    Theatre,
-    //    Tech,
-    //    Singing,
-    //    Movie;
-
 }

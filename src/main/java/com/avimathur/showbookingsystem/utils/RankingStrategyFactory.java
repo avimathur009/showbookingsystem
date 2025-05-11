@@ -3,8 +3,6 @@ package com.avimathur.showbookingsystem.utils;
 import com.avimathur.showbookingsystem.constant.RankingType;
 import com.avimathur.showbookingsystem.service.DefaultRankingStrategy;
 import com.avimathur.showbookingsystem.service.RankingStrategy;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 public class RankingStrategyFactory {
 

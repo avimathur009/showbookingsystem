@@ -2,21 +2,14 @@ package com.avimathur.showbookingsystem;
 
 import com.avimathur.showbookingsystem.constant.ShowType;
 import com.avimathur.showbookingsystem.constant.Slot;
-import com.avimathur.showbookingsystem.pojo.LiveShow;
-import com.avimathur.showbookingsystem.pojo.Organiser;
 import com.avimathur.showbookingsystem.pojo.User;
-import com.avimathur.showbookingsystem.repository.BookingsRepo;
-import com.avimathur.showbookingsystem.repository.ShowsRepo;
 import com.avimathur.showbookingsystem.repository.UserRepo;
 import com.avimathur.showbookingsystem.service.BookingsManager;
-import com.avimathur.showbookingsystem.utils.InputVerfier;
-import com.avimathur.showbookingsystem.utils.ShowFactory;
+import com.avimathur.showbookingsystem.utils.InputVerifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.Scanner;
-
-import static com.avimathur.showbookingsystem.constant.Slot.*;
 
 @SpringBootApplication
 public class ShowBookingSystemApplication {
@@ -27,7 +20,7 @@ public class ShowBookingSystemApplication {
 		BookingsManager bookingsManager = BookingsManager.getInstance();
 		UserRepo userRepo = UserRepo.getInstance();
 
-		InputVerfier verifyInput = new InputVerfier();
+		InputVerifier verifyInput = new InputVerifier();
 		Scanner scanner = new Scanner(System.in);
 
 		System.out.println("OPENING THE DAY");
@@ -104,7 +97,6 @@ public class ShowBookingSystemApplication {
             System.out.println("Enter next Instruction");
             instruction = scanner.nextLine();
         }
-
 	}
 
 }

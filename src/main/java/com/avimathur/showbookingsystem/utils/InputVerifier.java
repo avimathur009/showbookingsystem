@@ -5,9 +5,9 @@ import com.avimathur.showbookingsystem.service.BookingsManager;
 
 import java.util.Scanner;
 
-public class InputVerfier {
+public class InputVerifier {
 
-    private static int maxTries = 5;
+    private static final int maxTries = 5;
     private static final BookingsManager bookingsManager = BookingsManager.getInstance();
 
     String slotString = "";
