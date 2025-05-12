@@ -4,6 +4,7 @@ import com.avimathur.showbookingsystem.constant.RankingType;
 import com.avimathur.showbookingsystem.constant.ShowType;
 import com.avimathur.showbookingsystem.constant.Slot;
 import com.avimathur.showbookingsystem.service.BookingsManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
@@ -13,7 +14,8 @@ public class InputVerifier {
 
     private static final int maxTries = 5;
 
-    private final BookingsManager bookingsManager;
+    @Autowired
+    private BookingsManager bookingsManager;
 
     String slotString = "";
     String showNameString = "";
@@ -21,10 +23,6 @@ public class InputVerifier {
     String showTypeString = "";
 
     Scanner scanner = new Scanner(System.in);
-
-    public InputVerifier(BookingsManager bookingsManager) {
-        this.bookingsManager = bookingsManager;
-    }
 
     public Boolean checkSlotInput() {
         int currTries = 1;

@@ -18,15 +18,13 @@ import java.util.Scanner;
 public class ShowBookingSystemApplication implements CommandLineRunner {
 
     @Autowired
-    private final BookingsManager bookingsManager;
+    private BookingsManager bookingsManager;
 
     @Autowired
-    private final UserRepo userRepo;
+    private UserRepo userRepo;
 
-    public ShowBookingSystemApplication(BookingsManager bookingsManager, UserRepo userRepo) {
-        this.bookingsManager = bookingsManager;
-        this.userRepo = userRepo;
-    }
+    @Autowired
+    private InputVerifier verifyInput;
 
     public static void main(String[] args) {
         SpringApplication.run(ShowBookingSystemApplication.class, args);
@@ -35,7 +33,6 @@ public class ShowBookingSystemApplication implements CommandLineRunner {
     @Override
 	public void run(String[] args) {
 
-		InputVerifier verifyInput = new InputVerifier(bookingsManager);
 		Scanner scanner = new Scanner(System.in);
 
 		System.out.println("OPENING THE DAY");

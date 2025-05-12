@@ -19,20 +19,13 @@ import java.util.Scanner;
 public class BookingsManager {
 
     @Autowired
-    private final ShowsRepo showsRepo;
+    private ShowsRepo showsRepo;
 
     @Autowired
-    private final BookingsRepo bookingsRepo;
+    private BookingsRepo bookingsRepo;
 
     @Autowired
-    private final ShowFactory showFactory;
-
-    @Autowired
-    public BookingsManager(ShowsRepo showsRepo, BookingsRepo bookingsRepo, ShowFactory showFactory){
-        this.showsRepo = showsRepo;
-        this.bookingsRepo = bookingsRepo;
-        this.showFactory = showFactory;
-    }
+    private ShowFactory showFactory;
 
     public void initialize(RankingType rankingStrategy){
         showsRepo.setRankingStrategy(rankingStrategy);
