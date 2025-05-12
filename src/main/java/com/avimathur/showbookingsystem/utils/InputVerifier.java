@@ -1,7 +1,9 @@
 package com.avimathur.showbookingsystem.utils;
 
+import com.avimathur.showbookingsystem.constant.RankingType;
 import com.avimathur.showbookingsystem.constant.Slot;
 import com.avimathur.showbookingsystem.service.BookingsManager;
+import com.avimathur.showbookingsystem.service.RankingStrategy;
 
 import java.util.Scanner;
 
@@ -12,6 +14,7 @@ public class InputVerifier {
 
     String slotString = "";
     String showNameString = "";
+    String rankingStrategyString = "";
 
     Scanner scanner = new Scanner(System.in);
 
@@ -59,4 +62,27 @@ public class InputVerifier {
     public String getShowNameString(){
         return this.showNameString;
     }
+
+    public Boolean checkRankingStrategyInput() {
+        int currTries = 1;
+        String rankingStrategyString = scanner.nextLine();
+        Boolean isRankingPresent = RankingType.checkRankingString(showNameString);
+        while(!isRankingPresent && currTries<=maxTries){
+            System.out.println(rankingStrategyString + " -> This Ranking Strategy isn't registered yet! Try again!");
+            showNameString = scanner.nextLine();
+            isRankingPresent = RankingType.checkRankingString(showNameString);
+            currTries++;
+        }
+        if(!isRankingPresent) {
+            System.out.println("Maximum Tries Reached -> Invalid Ranking Strategy Selection");
+            return false;
+        }
+        this.rankingStrategyString=rankingStrategyString;
+        return true;
+    }
+
+    public String getRankingStrategyString(){
+        return this.rankingStrategyString;
+    }
+
 }

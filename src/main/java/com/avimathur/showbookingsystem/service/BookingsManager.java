@@ -1,5 +1,6 @@
 package com.avimathur.showbookingsystem.service;
 
+import com.avimathur.showbookingsystem.constant.RankingType;
 import com.avimathur.showbookingsystem.constant.ShowType;
 import com.avimathur.showbookingsystem.constant.Slot;
 import com.avimathur.showbookingsystem.pojo.Booking;
@@ -7,6 +8,7 @@ import com.avimathur.showbookingsystem.pojo.LiveShow;
 import com.avimathur.showbookingsystem.pojo.User;
 import com.avimathur.showbookingsystem.repository.BookingsRepo;
 import com.avimathur.showbookingsystem.repository.ShowsRepo;
+import com.avimathur.showbookingsystem.repository.UserRepo;
 import com.avimathur.showbookingsystem.utils.ShowFactory;
 
 import java.util.List;
@@ -18,17 +20,20 @@ public class BookingsManager {
 
     ShowsRepo showsRepo;
     BookingsRepo bookingsRepo;
-    ShowFactory showFactory;
+    UserRepo usersRepo;
 
-    public BookingsManager(){
-        this.showsRepo = ShowsRepo.getInstance();
-        showsRepo.setRankingStrategy("DefaultStrategy");
-        this.bookingsRepo = BookingsRepo.getInstance();
-        this.showFactory = new ShowFactory();
-    }
+    ShowFactory showFactory;
 
     public static BookingsManager getInstance(){
         return bookingsManager;
+    }
+
+    public void initialize(RankingType rankingStrategy){
+        this.showsRepo = ShowsRepo.getInstance();
+        showsRepo.setRankingStrategy(rankingStrategy);
+        this.bookingsRepo = BookingsRepo.getInstance();
+        this.usersRepo = UserRepo.getInstance();
+        this.showFactory = new ShowFactory();
     }
 
     public Boolean isShowRegistered(String showName){
@@ -64,6 +69,8 @@ public class BookingsManager {
 
         Booking newBooking = new Booking();
         newBooking.setBookingDetails(slot,showName,numPeople,user);
+
+        showsRepo.updateShowNameToFreq(showName,numPeople);
 
         if(!showsRepo.isShowNamePresent(showName)){
             System.out.println("Enter a valid Show Name!");
@@ -130,6 +137,8 @@ public class BookingsManager {
         System.out.println("Booking Status: Booking CANCELLED!");
         showsRepo.updateLiveShowBySlot(slot,show);
 
+        showsRepo.updateShowNameToFreq(showName,-numPeople);
+
         makeBookingAvailableFromWaitList(slot,show);
     }
 
@@ -150,4 +159,17 @@ public class BookingsManager {
     public Boolean isSlotAvailable(Slot slot, String showName) {
         return showsRepo.isSlotFreeForShowName(slot,showName);
     }
+
+    public void findTrendingLiveShow(){
+        int maxFreq = 0;
+        String trendingShowName = "";
+        for(String showName : showsRepo.getListOfShowToFreq().keySet()){
+            if(maxFreq<showsRepo.getListOfShowToFreq().get(showName)){
+                maxFreq=showsRepo.getListOfShowToFreq().get(showName);
+                trendingShowName = showName;
+            }
+        }
+        System.out.println("Trending Show: "+trendingShowName);
+    }
+
 }

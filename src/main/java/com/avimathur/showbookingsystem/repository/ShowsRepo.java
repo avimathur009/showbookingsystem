@@ -1,5 +1,6 @@
 package com.avimathur.showbookingsystem.repository;
 
+import com.avimathur.showbookingsystem.constant.RankingType;
 import com.avimathur.showbookingsystem.constant.ShowType;
 import com.avimathur.showbookingsystem.constant.Slot;
 import com.avimathur.showbookingsystem.pojo.LiveShow;
@@ -17,6 +18,8 @@ public class ShowsRepo {
 
         Map<String,ShowType> showNameToType;
 
+        Map<String,Integer> listOfShowNameToFreq;
+
         RankingStrategy rankingStrategy;
 
         RankingStrategyFactory rankingStrategyFactory;
@@ -30,7 +33,7 @@ public class ShowsRepo {
         return showsRepoInstance;
     }
 
-    public void setRankingStrategy(String rankingType){
+    public void setRankingStrategy(RankingType rankingType){
         rankingStrategyFactory = new RankingStrategyFactory(rankingType);
         rankingStrategy = rankingStrategyFactory.getRankingStrategy();
     }
@@ -132,4 +135,13 @@ public class ShowsRepo {
         }
         return true;
     }
+
+    public void updateShowNameToFreq(String showName, Integer numUsers){
+        listOfShowNameToFreq.put(showName, listOfShowNameToFreq.get(showName)+numUsers);
+    }
+
+    public Map<String,Integer> getListOfShowToFreq(){
+        return listOfShowNameToFreq;
+    }
+
 }

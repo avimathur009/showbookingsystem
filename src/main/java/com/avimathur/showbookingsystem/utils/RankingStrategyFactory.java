@@ -8,8 +8,8 @@ public class RankingStrategyFactory {
 
     RankingStrategy rankingStrategy;
 
-    public RankingStrategyFactory(String rankingType){
-        if(RankingType.valueOf(rankingType) == RankingType.DefaultStrategy){
+    public RankingStrategyFactory(RankingType rankingType){
+        if(rankingType == RankingType.Default){
             rankingStrategy = new DefaultRankingStrategy();
         }
         else{

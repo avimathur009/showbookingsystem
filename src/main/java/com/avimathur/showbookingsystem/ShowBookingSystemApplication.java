@@ -1,5 +1,6 @@
 package com.avimathur.showbookingsystem;
 
+import com.avimathur.showbookingsystem.constant.RankingType;
 import com.avimathur.showbookingsystem.constant.ShowType;
 import com.avimathur.showbookingsystem.constant.Slot;
 import com.avimathur.showbookingsystem.pojo.User;
@@ -24,6 +25,14 @@ public class ShowBookingSystemApplication {
 		Scanner scanner = new Scanner(System.in);
 
 		System.out.println("OPENING THE DAY");
+
+        System.out.println("Choose Ranking Strategy from these available strategies");
+        RankingType.showRankingStrategies();
+        if(!verifyInput.checkRankingStrategyInput()){
+            return;
+        }
+        RankingType rankingType = RankingType.fromRankingDetails(verifyInput.getRankingStrategyString());
+        bookingsManager.initialize(rankingType);
 
 		System.out.println("Enter Instruction");
 		String instruction = scanner.nextLine();
@@ -92,6 +101,9 @@ public class ShowBookingSystemApplication {
 					String name = scanner.nextLine();
 					User user = userRepo.getUser(name);
 					bookingsManager.cancelLiveBooking(user);
+                }
+                case "trendingLiveShow" -> {
+                    bookingsManager.findTrendingLiveShow();
                 }
             }
             System.out.println("Enter next Instruction");
