@@ -3,7 +3,6 @@ package com.avimathur.showbookingsystem.utils;
 import com.avimathur.showbookingsystem.constant.RankingType;
 import com.avimathur.showbookingsystem.constant.Slot;
 import com.avimathur.showbookingsystem.service.BookingsManager;
-import com.avimathur.showbookingsystem.service.RankingStrategy;
 
 import java.util.Scanner;
 
@@ -66,7 +65,7 @@ public class InputVerifier {
     public Boolean checkRankingStrategyInput() {
         int currTries = 1;
         String rankingStrategyString = scanner.nextLine();
-        Boolean isRankingPresent = RankingType.checkRankingString(showNameString);
+        boolean isRankingPresent = RankingType.checkRankingString(showNameString);
         while(!isRankingPresent && currTries<=maxTries){
             System.out.println(rankingStrategyString + " -> This Ranking Strategy isn't registered yet! Try again!");
             showNameString = scanner.nextLine();
