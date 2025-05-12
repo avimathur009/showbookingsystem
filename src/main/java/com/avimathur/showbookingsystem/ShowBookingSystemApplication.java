@@ -7,21 +7,35 @@ import com.avimathur.showbookingsystem.pojo.User;
 import com.avimathur.showbookingsystem.repository.UserRepo;
 import com.avimathur.showbookingsystem.service.BookingsManager;
 import com.avimathur.showbookingsystem.utils.InputVerifier;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.Scanner;
 
 @SpringBootApplication
-public class ShowBookingSystemApplication {
+public class ShowBookingSystemApplication implements CommandLineRunner {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ShowBookingSystemApplication.class, args);
+    @Autowired
+    private final BookingsManager bookingsManager;
 
-		BookingsManager bookingsManager = BookingsManager.getInstance();
-		UserRepo userRepo = UserRepo.getInstance();
+    @Autowired
+    private final UserRepo userRepo;
 
-		InputVerifier verifyInput = new InputVerifier();
+    public ShowBookingSystemApplication(BookingsManager bookingsManager, UserRepo userRepo) {
+        this.bookingsManager = bookingsManager;
+        this.userRepo = userRepo;
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(ShowBookingSystemApplication.class, args);
+    }
+
+    @Override
+	public void run(String[] args) {
+
+		InputVerifier verifyInput = new InputVerifier(bookingsManager);
 		Scanner scanner = new Scanner(System.in);
 
 		System.out.println("OPENING THE DAY");
@@ -42,8 +56,10 @@ public class ShowBookingSystemApplication {
             switch (instruction) {
                 case "registerShow" -> {
                     System.out.println("Choose ShowType");
-                    String type = scanner.nextLine();
-                    ShowType showType = ShowType.valueOf(type);
+                    if(!verifyInput.checkShowTypeInput()){
+                        break;
+                    }
+                    ShowType showType = ShowType.valueOf(verifyInput.getShowTypeInput());
                     System.out.println("Choose ShowName");
                     String showName = scanner.nextLine();
                     bookingsManager.registerNewLiveShow(showName, showType);
@@ -72,6 +88,7 @@ public class ShowBookingSystemApplication {
 						}
                         System.out.println("Choose the capacity of the show");
                         Integer capacity = scanner.nextInt();
+                        scanner.nextLine();
                         bookingsManager.addSlotsForLiveShow(showName, slot, capacity, price);
                     }
                 }
@@ -81,6 +98,10 @@ public class ShowBookingSystemApplication {
                     User user = userRepo.getUser(userName);
 					System.out.println("Enter Show Name");
 					String showName = scanner.nextLine();
+                    Boolean showRegistered = bookingsManager.isShowRegistered(showName);
+                    if(!showRegistered){
+                        break;
+                    }
 					System.out.println("Enter number of People you want to do booking for");
 					Integer numPeople = scanner.nextInt();
 					scanner.nextLine();
@@ -88,7 +109,7 @@ public class ShowBookingSystemApplication {
 					if(!verifyInput.checkSlotInput()){
 						continue;
 					}
-					Slot slot = Slot.valueOf(verifyInput.getCorrectSlotInput());
+                    Slot slot = Slot.fromSlotDetails(verifyInput.getCorrectSlotInput());
 					bookingsManager.bookLiveShow(user,slot,showName,numPeople);
                 }
                 case "showAvailableShowsByGenre" -> {

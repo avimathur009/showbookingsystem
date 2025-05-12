@@ -1,11 +1,12 @@
 package com.avimathur.showbookingsystem.repository;
 import com.avimathur.showbookingsystem.pojo.Booking;
 import com.avimathur.showbookingsystem.pojo.User;
+import org.springframework.stereotype.Repository;
+
 import java.util.*;
 
+@Repository
 public class BookingsRepo {
-
-    private static final BookingsRepo bookingRepoInstance = new BookingsRepo();
 
     Map<User, ArrayList<Booking>> listOfConfirmedBookings;
     Deque<Booking> listOfUnconfirmedBookings;
@@ -13,10 +14,6 @@ public class BookingsRepo {
     public BookingsRepo(){
         listOfUnconfirmedBookings = new ArrayDeque<>();
         listOfConfirmedBookings = new HashMap<>();
-    }
-
-    public static BookingsRepo getInstance(){
-        return bookingRepoInstance;
     }
 
     public void registerNewConfirmedBooking(Booking booking){

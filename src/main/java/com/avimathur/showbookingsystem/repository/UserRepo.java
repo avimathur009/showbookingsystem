@@ -1,9 +1,11 @@
 package com.avimathur.showbookingsystem.repository;
 
 import com.avimathur.showbookingsystem.pojo.User;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 
+@Repository
 public class UserRepo {
 
     private static final UserRepo userRepo = new UserRepo();
@@ -12,10 +14,6 @@ public class UserRepo {
 
     private UserRepo(){
         listOfUsers = new ArrayList<>();
-    }
-
-    public static UserRepo getInstance(){
-        return userRepo;
     }
 
     public User getUser(String name){

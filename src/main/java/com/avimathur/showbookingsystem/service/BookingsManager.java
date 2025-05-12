@@ -8,32 +8,34 @@ import com.avimathur.showbookingsystem.pojo.LiveShow;
 import com.avimathur.showbookingsystem.pojo.User;
 import com.avimathur.showbookingsystem.repository.BookingsRepo;
 import com.avimathur.showbookingsystem.repository.ShowsRepo;
-import com.avimathur.showbookingsystem.repository.UserRepo;
 import com.avimathur.showbookingsystem.utils.ShowFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Scanner;
 
+@Service
 public class BookingsManager {
 
-    private static final BookingsManager bookingsManager = new BookingsManager();
+    @Autowired
+    private final ShowsRepo showsRepo;
 
-    ShowsRepo showsRepo;
-    BookingsRepo bookingsRepo;
-    UserRepo usersRepo;
+    @Autowired
+    private final BookingsRepo bookingsRepo;
 
-    ShowFactory showFactory;
+    @Autowired
+    private final ShowFactory showFactory;
 
-    public static BookingsManager getInstance(){
-        return bookingsManager;
+    @Autowired
+    public BookingsManager(ShowsRepo showsRepo, BookingsRepo bookingsRepo, ShowFactory showFactory){
+        this.showsRepo = showsRepo;
+        this.bookingsRepo = bookingsRepo;
+        this.showFactory = showFactory;
     }
 
     public void initialize(RankingType rankingStrategy){
-        this.showsRepo = ShowsRepo.getInstance();
         showsRepo.setRankingStrategy(rankingStrategy);
-        this.bookingsRepo = BookingsRepo.getInstance();
-        this.usersRepo = UserRepo.getInstance();
-        this.showFactory = new ShowFactory();
     }
 
     public Boolean isShowRegistered(String showName){
@@ -51,7 +53,7 @@ public class BookingsManager {
         Boolean showAdded = showsRepo.addShowInSlot(slot,show);
         if(showAdded){
             System.out.println("Status: Slot Registered! -> "+"Slot: "+slot.toString()+" ("+slot.getSlotDetail()
-                    +") || Capacity: capacity");
+                    +") || Capacity: "+capacity);
         }
         else{
             System.out.println("Status: Slot Full - Slot NOT Registered -> "+"Slot: "
@@ -65,6 +67,13 @@ public class BookingsManager {
     }
 
     public void bookLiveShow(User user, Slot slot, String showName, Integer numPeople){
+
+        Boolean slotAvailable = showsRepo.isSlotFreeForShowName(slot,showName);
+
+        if(!slotAvailable){
+            return;
+        }
+
         boolean showFound=false;
 
         Booking newBooking = new Booking();

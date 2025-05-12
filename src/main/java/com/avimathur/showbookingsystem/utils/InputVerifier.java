@@ -1,22 +1,30 @@
 package com.avimathur.showbookingsystem.utils;
 
 import com.avimathur.showbookingsystem.constant.RankingType;
+import com.avimathur.showbookingsystem.constant.ShowType;
 import com.avimathur.showbookingsystem.constant.Slot;
 import com.avimathur.showbookingsystem.service.BookingsManager;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 public class InputVerifier {
 
     private static final int maxTries = 5;
-    private static final BookingsManager bookingsManager = BookingsManager.getInstance();
+
+    private final BookingsManager bookingsManager;
 
     String slotString = "";
     String showNameString = "";
     String rankingStrategyString = "";
+    String showTypeString = "";
 
     Scanner scanner = new Scanner(System.in);
 
+    public InputVerifier(BookingsManager bookingsManager) {
+        this.bookingsManager = bookingsManager;
+    }
 
     public Boolean checkSlotInput() {
         int currTries = 1;
@@ -65,11 +73,11 @@ public class InputVerifier {
     public Boolean checkRankingStrategyInput() {
         int currTries = 1;
         String rankingStrategyString = scanner.nextLine();
-        boolean isRankingPresent = RankingType.checkRankingString(showNameString);
+        boolean isRankingPresent = RankingType.checkRankingString(rankingStrategyString);
         while(!isRankingPresent && currTries<=maxTries){
             System.out.println(rankingStrategyString + " -> This Ranking Strategy isn't registered yet! Try again!");
-            showNameString = scanner.nextLine();
-            isRankingPresent = RankingType.checkRankingString(showNameString);
+            rankingStrategyString = scanner.nextLine();
+            isRankingPresent = RankingType.checkRankingString(rankingStrategyString);
             currTries++;
         }
         if(!isRankingPresent) {
@@ -84,4 +92,27 @@ public class InputVerifier {
         return this.rankingStrategyString;
     }
 
+    public boolean checkShowTypeInput() {
+        int currTries = 1;
+        String showTypeString = scanner.nextLine();
+        boolean isShowTypeStringCorrect = ShowType.checkShowTypeString(showTypeString);
+        while(!isShowTypeStringCorrect && currTries<=maxTries){
+            System.out.println(showTypeString
+                    + " -> Invalid Show Type Selection! Choose From these Show Types.");
+            ShowType.showShowTypes();
+            showTypeString = scanner.nextLine();
+            isShowTypeStringCorrect = ShowType.checkShowTypeString(showTypeString);
+            currTries++;
+        }
+        if(!isShowTypeStringCorrect) {
+            System.out.println("Maximum Tries Reached -> Invalid Show Type Selection");
+            return false;
+        }
+        this.showTypeString=showTypeString;
+        return true;
+    }
+
+    public String getShowTypeInput() {
+        return showTypeString;
+    }
 }

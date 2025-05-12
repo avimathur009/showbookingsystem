@@ -42,7 +42,7 @@ public class DefaultRankingStrategy extends RankingStrategy{
                 if(show.getShowType()==requestedShowType && show.getCurrCapacity()!=0){
                     Slot slot = show.getShowSlot();
                     System.out.println(slot.getSlotDetail()+" HRS || ShowName: "+show.getShowName()+
-                            " || Capacity: "+show.getMaxCapacity()+" || Price: "+show.getShowPrice());
+                            " || Capacity: "+show.getCurrCapacity()+" || Price: "+show.getShowPrice());
                 }
             }
         }

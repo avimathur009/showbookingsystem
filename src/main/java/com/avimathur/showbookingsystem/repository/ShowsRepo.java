@@ -6,12 +6,13 @@ import com.avimathur.showbookingsystem.constant.Slot;
 import com.avimathur.showbookingsystem.pojo.LiveShow;
 import com.avimathur.showbookingsystem.service.RankingStrategy;
 import com.avimathur.showbookingsystem.utils.RankingStrategyFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+@Repository
 public class ShowsRepo {
-
-    private static final ShowsRepo showsRepoInstance = new ShowsRepo();
 
     protected
         Map<String, ArrayList<LiveShow>> listOfShows;
@@ -20,21 +21,21 @@ public class ShowsRepo {
 
         Map<String,Integer> listOfShowNameToFreq;
 
+        @Autowired
         RankingStrategy rankingStrategy;
 
+        @Autowired
         RankingStrategyFactory rankingStrategyFactory;
 
+    @Autowired
     public ShowsRepo(){
         listOfShows = new HashMap<>();
         showNameToType = new HashMap<>();
-    }
-
-    public static ShowsRepo getInstance(){
-        return showsRepoInstance;
+        listOfShowNameToFreq = new HashMap<>();
     }
 
     public void setRankingStrategy(RankingType rankingType){
-        rankingStrategyFactory = new RankingStrategyFactory(rankingType);
+        rankingStrategyFactory.setRankingStrategy(rankingType);
         rankingStrategy = rankingStrategyFactory.getRankingStrategy();
     }
 
@@ -71,13 +72,16 @@ public class ShowsRepo {
     }
 
     public Boolean isShowNamePresent(String showName){
+        if(!listOfShows.containsKey(showName)){
+            System.out.println("Status: Invalid Show Name -> "+showName+" NOT Registered");
+        }
         return listOfShows.containsKey(showName);
     }
 
     public Boolean isSlotFree(Slot slot, String showName){
         for(LiveShow availableShow : listOfShows.get(showName)){
             if(availableShow.getShowSlot().equals(slot)){
-                System.out.println(slot.toString() + "(+"+slot.getSlotDetail()
+                System.out.println(slot.toString() + " ("+slot.getSlotDetail()
                         +") HRS Slot NOT available for the Show "+showName);
                 return false;
             }
@@ -129,15 +133,21 @@ public class ShowsRepo {
     public boolean isSlotFreeForShowName(Slot slot, String showName) {
         for(LiveShow show : listOfShows.get(showName)){
             if(show.getShowSlot() == slot){
-                System.out.println("Duplicate Slot Selected for Registering the Show: "+showName);
-                return false;
+                return true;
             }
         }
+        System.out.println(slot.toString() + " ("+slot.getSlotDetail()
+                +") HRS Slot NOT available for the Show "+showName);
         return true;
     }
 
     public void updateShowNameToFreq(String showName, Integer numUsers){
-        listOfShowNameToFreq.put(showName, listOfShowNameToFreq.get(showName)+numUsers);
+        if(!listOfShowNameToFreq.containsKey(showName)){
+            listOfShowNameToFreq.put(showName,numUsers);
+        }
+        else{
+            listOfShowNameToFreq.put(showName, listOfShowNameToFreq.get(showName)+numUsers);
+        }
     }
 
     public Map<String,Integer> getListOfShowToFreq(){
