@@ -10,4 +10,4 @@ List of instructions to give:
 
 -> "cancelBooking"
 
--> "mostBookedLiveShow"
+-> "trendingLiveShow"
