@@ -8,8 +8,6 @@ import java.util.ArrayList;
 @Repository
 public class UserRepo {
 
-    private static final UserRepo userRepo = new UserRepo();
-
     ArrayList<User> listOfUsers;
 
     private UserRepo(){

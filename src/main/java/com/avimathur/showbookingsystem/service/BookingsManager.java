@@ -68,7 +68,7 @@ public class BookingsManager {
 
     public void bookLiveShow(User user, Slot slot, String showName, Integer numPeople){
 
-        Boolean slotAvailable = showsRepo.isSlotFreeForShowName(slot,showName);
+        boolean slotAvailable = showsRepo.isSlotFreeForShowName(slot,showName);
 
         if(!slotAvailable){
             return;
