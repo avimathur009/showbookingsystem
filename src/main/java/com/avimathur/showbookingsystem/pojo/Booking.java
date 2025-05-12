@@ -1,9 +1,7 @@
 package com.avimathur.showbookingsystem.pojo;
 
 import com.avimathur.showbookingsystem.constant.Slot;
-import org.springframework.stereotype.Component;
 
-@Component
 public class Booking {
 
     Slot showSlot;
