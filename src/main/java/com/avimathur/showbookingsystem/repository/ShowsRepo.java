@@ -41,7 +41,7 @@ public class ShowsRepo {
 
     public void addShow(String showName, ShowType showType){
         if(listOfShows.containsKey(showName)){
-            System.out.println("Status: Already Registered! -> Show Name: "+showName+" || Show Type: "+showType);
+            System.out.println("Status: Already Registered! -> Show Name: "+showName+" || Show Type: "+showNameToType.get(showName));
         }
         else{
             System.out.println("Status: Registered! -> Show Name: "+showName+" || Show Type: "+showType);

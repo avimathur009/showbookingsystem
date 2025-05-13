@@ -134,6 +134,7 @@ public class ShowBookingSystemApplication implements CommandLineRunner {
                     Boolean userPresent = userRepo.isUserPresent(name);
                     if(!userPresent){
                         System.out.println("Can't Cancel!");
+                        continue;
                     }
 					User user = userRepo.getUser(name);
 					bookingsManager.cancelLiveBooking(user);
