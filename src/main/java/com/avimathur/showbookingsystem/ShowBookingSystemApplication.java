@@ -58,7 +58,7 @@ public class ShowBookingSystemApplication implements CommandLineRunner {
             switch (instruction) {
                 case "registerShow" -> {
                     System.out.println("Choose ShowType");
-                    if(!verifyInput.checkShowTypeInput()){
+                    if(verifyInput.checkShowTypeInput()){
                         break;
                     }
                     ShowType showType = ShowType.valueOf(verifyInput.getShowTypeInput());
@@ -124,7 +124,7 @@ public class ShowBookingSystemApplication implements CommandLineRunner {
                 }
                 case "showAvailableShowsByGenre" -> {
 					System.out.println("Enter Show Type");
-                    if(!verifyInput.checkShowTypeInput()){
+                    if(verifyInput.checkShowTypeInput()){
                         break;
                     }
 					bookingsManager.showAllAvailableShowsByType(verifyInput.getShowTypeInput());

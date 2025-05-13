@@ -31,10 +31,6 @@ public class BookingsManager {
         showsRepo.setRankingStrategy(rankingStrategy);
     }
 
-    public Boolean isShowRegistered(String showName){
-        return showsRepo.isShowNamePresent(showName);
-    }
-
     public void registerNewLiveShow(String showName, ShowType showType){
         showsRepo.addShow(showName,showType);
     }
@@ -54,9 +50,16 @@ public class BookingsManager {
         }
     }
 
-    public void showAllAvailableShowsByType(String type){
-        ShowType showType = ShowType.valueOf(type);
-        showsRepo.printAllAvailableShowsByShowType(showType);
+    public Boolean isShowRegistered(String showName){
+        return showsRepo.isShowNamePresent(showName);
+    }
+
+    public Boolean isShowRegisteredForSlot(Slot slot, String showName) {
+        return showsRepo.isShowRegisteredForSlot(slot,showName);
+    }
+
+    public Boolean isSlotAvailableForShowName(Slot slot, String showName) {
+        return showsRepo.isSlotAvailableForShowName(slot,showName);
     }
 
     public void bookLiveShow(User user, Slot slot, String showName, Integer numPeople){
@@ -158,14 +161,6 @@ public class BookingsManager {
 
     }
 
-    public Boolean isShowRegisteredForSlot(Slot slot, String showName) {
-        return showsRepo.isShowRegisteredForSlot(slot,showName);
-    }
-
-    public Boolean isSlotAvailableForShowName(Slot slot, String showName) {
-        return showsRepo.isSlotAvailableForShowName(slot,showName);
-    }
-
     public void findTrendingLiveShow(){
         int maxFreq = 0;
         String trendingShowName = "";
@@ -176,6 +171,11 @@ public class BookingsManager {
             }
         }
         System.out.println("Trending Show: "+trendingShowName);
+    }
+
+    public void showAllAvailableShowsByType(String type){
+        ShowType showType = ShowType.valueOf(type);
+        showsRepo.printAllAvailableShowsByShowType(showType);
     }
 
 }

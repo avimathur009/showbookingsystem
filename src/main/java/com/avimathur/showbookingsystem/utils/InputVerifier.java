@@ -104,10 +104,10 @@ public class InputVerifier {
         }
         if(!isShowTypeStringCorrect) {
             System.out.println("Maximum Tries Reached -> Invalid Show Type Selection");
-            return false;
+            return true;
         }
         this.showTypeString=showTypeString;
-        return true;
+        return false;
     }
 
     public String getShowTypeInput() {

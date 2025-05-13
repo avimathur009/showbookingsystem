@@ -50,10 +50,6 @@ public class ShowsRepo {
         }
     }
 
-    public ShowType getShowType(String showName){
-        return showNameToType.getOrDefault(showName, null);
-    }
-
     public Boolean addShowInSlot(Slot slot, LiveShow show){
         String showName = show.getShowName();
         if(listOfShows.isEmpty() || !listOfShows.containsKey(showName)){
@@ -68,6 +64,30 @@ public class ShowsRepo {
         }
         else{
             return false;
+        }
+    }
+
+    public void updateLiveShowBySlot(Slot slot, LiveShow updatedShow){
+
+        String showName = updatedShow.getShowName();
+
+        for(LiveShow show : listOfShows.get(showName)){
+            if(show.getShowSlot() == slot){
+                int currIndex = listOfShows.get(showName).indexOf(show);
+                listOfShows.get(showName).set(currIndex,updatedShow);
+                return;
+            }
+        }
+
+        listOfShows.get(showName).add(updatedShow);
+    }
+
+    public void updateShowNameToFreq(String showName, Integer numUsers){
+        if(!listOfShowNameToFreq.containsKey(showName)){
+            listOfShowNameToFreq.put(showName,numUsers);
+        }
+        else{
+            listOfShowNameToFreq.put(showName, listOfShowNameToFreq.get(showName)+numUsers);
         }
     }
 
@@ -100,11 +120,8 @@ public class ShowsRepo {
         return false;
     }
 
-    public ArrayList<LiveShow> getShowsByShowName(String showName){
-        if(listOfShows.containsKey(showName)){
-            return listOfShows.get(showName);
-        }
-        return null;
+    public ShowType getShowType(String showName){
+        return showNameToType.getOrDefault(showName, null);
     }
 
     public LiveShow getShowBySlotAndName(Slot slot, String showName){
@@ -118,23 +135,15 @@ public class ShowsRepo {
         return null;
     }
 
-    public void updateLiveShowBySlot(Slot slot, LiveShow updatedShow){
-
-        String showName = updatedShow.getShowName();
-
-        for(LiveShow show : listOfShows.get(showName)){
-            if(show.getShowSlot() == slot){
-                int currIndex = listOfShows.get(showName).indexOf(show);
-                listOfShows.get(showName).set(currIndex,updatedShow);
-                return;
-            }
+    public ArrayList<LiveShow> getShowsByShowName(String showName){
+        if(listOfShows.containsKey(showName)){
+            return listOfShows.get(showName);
         }
-
-        listOfShows.get(showName).add(updatedShow);
+        return null;
     }
 
-    public void printAllShowsByShowType(ShowType requestedShowType){
-        rankingStrategy.displayAllShowsByShowType(requestedShowType,listOfShows);
+    public Map<String,Integer> getListOfShowToFreq(){
+        return listOfShowNameToFreq;
     }
 
     public void printAllBookableShows(){
@@ -145,23 +154,14 @@ public class ShowsRepo {
         rankingStrategy.displayAvailableShowsByShowType(requestedShowType,listOfShows);
     }
 
-    public void updateShowNameToFreq(String showName, Integer numUsers){
-        if(!listOfShowNameToFreq.containsKey(showName)){
-            listOfShowNameToFreq.put(showName,numUsers);
-        }
-        else{
-            listOfShowNameToFreq.put(showName, listOfShowNameToFreq.get(showName)+numUsers);
-        }
-    }
-
-    public Map<String,Integer> getListOfShowToFreq(){
-        return listOfShowNameToFreq;
-    }
-
     public void printAllRegisteredShows(){
         for(String showName : showNameToType.keySet()){
             System.out.println("Show Name: "+showName+" || Show Type: "+showNameToType.get(showName));
         }
+    }
+
+    public void printAllShowsByShowType(ShowType requestedShowType){
+        rankingStrategy.displayAllShowsByShowType(requestedShowType,listOfShows);
     }
 
 }
