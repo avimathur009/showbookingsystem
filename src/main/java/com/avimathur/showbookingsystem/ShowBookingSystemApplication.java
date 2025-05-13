@@ -50,7 +50,7 @@ public class ShowBookingSystemApplication implements CommandLineRunner {
         bookingsManager.initialize(rankingType);
 
 		System.out.println("Enter Instruction");
-		String instruction = scanner.nextLine();
+		String instruction = scanner.nextLine().trim();
 
         Instructions:
         while(!instruction.equals("STOP")){
