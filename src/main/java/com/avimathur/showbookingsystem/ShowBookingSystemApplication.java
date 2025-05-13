@@ -112,12 +112,12 @@ public class ShowBookingSystemApplication implements CommandLineRunner {
 					scanner.nextLine();
                     System.out.println("Choose ShowSlot from Slot0 - Slot23 (Each Of 1 Hour)");
 					if(!verifyInput.checkSlotInput()){
-						continue;
+						break;
 					}
                     Slot slot = Slot.fromSlotDetails(verifyInput.getCorrectSlotInput());
                     Boolean isShowRegisteredForSlot = bookingsManager.isShowRegisteredForSlot(slot,showName);
                     if(!isShowRegisteredForSlot){
-                        continue;
+                        break;
                     }
 					bookingsManager.bookLiveShow(user,slot,showName,numPeople);
                 }
@@ -134,7 +134,7 @@ public class ShowBookingSystemApplication implements CommandLineRunner {
                     Boolean userPresent = userRepo.isUserPresent(name);
                     if(!userPresent){
                         System.out.println("Can't Cancel!");
-                        continue;
+                        break;
                     }
 					User user = userRepo.getUser(name);
 					bookingsManager.cancelLiveBooking(user);
@@ -151,6 +151,7 @@ public class ShowBookingSystemApplication implements CommandLineRunner {
             System.out.println("Enter next Instruction");
             instruction = scanner.nextLine().trim();
         }
+        System.out.println("END OF THE DAY");
 	}
 
 }
