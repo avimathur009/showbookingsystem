@@ -52,8 +52,9 @@ public class ShowBookingSystemApplication implements CommandLineRunner {
 		System.out.println("Enter Instruction");
 		String instruction = scanner.nextLine();
 
-        label:
+        Instructions:
         while(!instruction.equals("STOP")){
+
             switch (instruction) {
                 case "registerShow" -> {
                     System.out.println("Choose ShowType");
@@ -148,10 +149,11 @@ public class ShowBookingSystemApplication implements CommandLineRunner {
                             "|| cancelBooking || trendingLiveShow");
                 }
             }
+
             System.out.println("Enter next Instruction");
             instruction = scanner.nextLine().trim();
         }
+
         System.out.println("END OF THE DAY");
 	}
-
 }
