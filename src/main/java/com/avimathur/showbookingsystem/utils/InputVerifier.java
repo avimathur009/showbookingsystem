@@ -26,11 +26,11 @@ public class InputVerifier {
 
     public Boolean checkSlotInput() {
         int currTries = 1;
-        String slotString = scanner.nextLine();
+        String slotString = scanner.nextLine().trim();
         boolean isSlotStringCorrect = Slot.checkSlotString(slotString);
         while(!isSlotStringCorrect && currTries<=maxTries){
             System.out.println(slotString + " -> Invalid Slot Selection! Choose Slot from 0000-2300 HRS - Each Of 1 Hour");
-            slotString = scanner.nextLine();
+            slotString = scanner.nextLine().trim();
             isSlotStringCorrect = Slot.checkSlotString(slotString);
             currTries++;
         }
@@ -48,11 +48,11 @@ public class InputVerifier {
 
     public Boolean checkShowNameInput() {
         int currTries = 1;
-        String showNameString = scanner.nextLine();
+        String showNameString = scanner.nextLine().trim();
         Boolean isShowPresent = bookingsManager.isShowRegistered(showNameString);
         while(!isShowPresent && currTries<=maxTries){
             System.out.println(showNameString + " -> This show isn't registered yet! Try again!");
-            showNameString = scanner.nextLine();
+            showNameString = scanner.nextLine().trim();
             isShowPresent = bookingsManager.isShowRegistered(showNameString);
             currTries++;
         }
@@ -70,11 +70,11 @@ public class InputVerifier {
 
     public Boolean checkRankingStrategyInput() {
         int currTries = 1;
-        String rankingStrategyString = scanner.nextLine();
+        String rankingStrategyString = scanner.nextLine().trim();
         boolean isRankingPresent = RankingType.checkRankingString(rankingStrategyString);
         while(!isRankingPresent && currTries<=maxTries){
             System.out.println(rankingStrategyString + " -> This Ranking Strategy isn't registered yet! Try again!");
-            rankingStrategyString = scanner.nextLine();
+            rankingStrategyString = scanner.nextLine().trim();
             isRankingPresent = RankingType.checkRankingString(rankingStrategyString);
             currTries++;
         }
@@ -92,13 +92,13 @@ public class InputVerifier {
 
     public boolean checkShowTypeInput() {
         int currTries = 1;
-        String showTypeString = scanner.nextLine();
+        String showTypeString = scanner.nextLine().trim();
         boolean isShowTypeStringCorrect = ShowType.checkShowTypeString(showTypeString);
         while(!isShowTypeStringCorrect && currTries<=maxTries){
             System.out.println(showTypeString
                     + " -> Invalid Show Type Selection! Choose From these Show Types.");
             ShowType.showShowTypes();
-            showTypeString = scanner.nextLine();
+            showTypeString = scanner.nextLine().trim();
             isShowTypeStringCorrect = ShowType.checkShowTypeString(showTypeString);
             currTries++;
         }

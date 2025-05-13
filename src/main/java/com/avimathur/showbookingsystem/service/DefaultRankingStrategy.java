@@ -12,12 +12,16 @@ import java.util.Map;
 public class DefaultRankingStrategy extends RankingStrategy{
 
     @Override
-    public void displayAllShows(Map<String, ArrayList<LiveShow>> listOfShows) {
+    public void displayAllBookableShows(Map<String, ArrayList<LiveShow>> listOfShows) {
         for(String showName : listOfShows.keySet()){
+            if(listOfShows.get(showName).isEmpty()){
+               continue;
+            }
+            System.out.println("Show Name: "+showName);
             for(LiveShow show : listOfShows.get(showName)){
                 Slot slot = show.getShowSlot();
-                System.out.println(slot.getSlotDetail()+" HRS || ShowName: "+show.getShowName()+
-                        " || Capacity: "+show.getMaxCapacity()+" || Price: "+show.getShowPrice());
+                System.out.println(slot.toString()+" ("+slot.getSlotDetail()+" HRS)"
+                        +" || Current Capacity: "+show.getCurrCapacity()+" || Price: "+show.getShowPrice());
             }
         }
     }

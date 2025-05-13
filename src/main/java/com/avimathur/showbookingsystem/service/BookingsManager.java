@@ -61,9 +61,9 @@ public class BookingsManager {
 
     public void bookLiveShow(User user, Slot slot, String showName, Integer numPeople){
 
-        boolean slotAvailable = showsRepo.isSlotFreeForShowName(slot,showName);
+        boolean showAvailableForSlot = showsRepo.isShowRegisteredForSlot(slot,showName);
 
-        if(!slotAvailable){
+        if(!showAvailableForSlot){
             return;
         }
 
@@ -158,8 +158,12 @@ public class BookingsManager {
 
     }
 
-    public Boolean isSlotAvailable(Slot slot, String showName) {
-        return showsRepo.isSlotFreeForShowName(slot,showName);
+    public Boolean isShowRegisteredForSlot(Slot slot, String showName) {
+        return showsRepo.isShowRegisteredForSlot(slot,showName);
+    }
+
+    public Boolean isSlotAvailableForShowName(Slot slot, String showName) {
+        return showsRepo.isSlotAvailableForShowName(slot,showName);
     }
 
     public void findTrendingLiveShow(){

@@ -62,7 +62,7 @@ public class ShowsRepo {
             listOfShows.put(showName,setOfShows);
             return true;
         }
-        else if(isSlotFree(slot,showName)){
+        else if(isSlotAvailableForShowName(slot,showName)){
             listOfShows.get(showName).add(show);
             return true;
         }
@@ -78,7 +78,7 @@ public class ShowsRepo {
         return listOfShows.containsKey(showName);
     }
 
-    public Boolean isSlotFree(Slot slot, String showName){
+    public Boolean isSlotAvailableForShowName(Slot slot, String showName){
         for(LiveShow availableShow : listOfShows.get(showName)){
             if(availableShow.getShowSlot().equals(slot)){
                 System.out.println(slot.toString() + " ("+slot.getSlotDetail()
@@ -87,6 +87,17 @@ public class ShowsRepo {
             }
         }
         return true;
+    }
+
+    public boolean isShowRegisteredForSlot(Slot slot, String showName) {
+        for(LiveShow show : listOfShows.get(showName)){
+            if(show.getShowSlot() == slot){
+                return true;
+            }
+        }
+        System.out.println(showName+" NOT available for "+slot.toString() + " ("+slot.getSlotDetail()
+                +") HRS");
+        return false;
     }
 
     public ArrayList<LiveShow> getShowsByShowName(String showName){
@@ -126,19 +137,12 @@ public class ShowsRepo {
         rankingStrategy.displayAllShowsByShowType(requestedShowType,listOfShows);
     }
 
-    public void printAllAvailableShowsByShowType(ShowType requestedShowType){
-        rankingStrategy.displayAvailableShowsByShowType(requestedShowType,listOfShows);
+    public void printAllBookableShows(){
+        rankingStrategy.displayAllBookableShows(listOfShows);
     }
 
-    public boolean isSlotFreeForShowName(Slot slot, String showName) {
-        for(LiveShow show : listOfShows.get(showName)){
-            if(show.getShowSlot() == slot){
-                return true;
-            }
-        }
-        System.out.println(slot.toString() + " ("+slot.getSlotDetail()
-                +") HRS Slot NOT available for the Show "+showName);
-        return true;
+    public void printAllAvailableShowsByShowType(ShowType requestedShowType){
+        rankingStrategy.displayAvailableShowsByShowType(requestedShowType,listOfShows);
     }
 
     public void updateShowNameToFreq(String showName, Integer numUsers){
@@ -152,6 +156,12 @@ public class ShowsRepo {
 
     public Map<String,Integer> getListOfShowToFreq(){
         return listOfShowNameToFreq;
+    }
+
+    public void printAllRegisteredShows(){
+        for(String showName : showNameToType.keySet()){
+            System.out.println("Show Name: "+showName+" || Show Type: "+showNameToType.get(showName));
+        }
     }
 
 }

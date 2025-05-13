@@ -26,4 +26,14 @@ public class UserRepo {
         return user;
     }
 
+    public Boolean isUserPresent(String userName){
+        for(User user : listOfUsers){
+            if(user.getUserName().equals(userName)){
+                return true;
+            }
+        }
+        System.out.println(userName + " you HAVEN'T made any Bookings!");
+        return false;
+    }
+
 }
